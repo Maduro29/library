@@ -19,7 +19,35 @@
 </head>
 
 <body>
-
+    <div class="container">
+        <div class="row col-8">
+            <form class="row g-3" action="/postbook" method="POST">
+                <div class="col-md-12">
+                    <label class="form-label">Book ID</label>
+                    <input type="text" class="form-control" placeholder="Enter the id" name="bookId">
+                </div>
+                <div class="col-md-12">
+                    <label class="form-label">Title</label>
+                    <input type="text" class="form-control" placeholder="Enter the title" name="title">
+                </div>
+                <div class="col-md-12">
+                    <label class="form-label">Publisher</label>
+                    <input type="text" class="form-control" placeholder="Publisher" name="publisher">
+                </div>
+                <div class="col-md-12">
+                    <label class="form-label">Year</label>
+                    <input type="text" class="form-control" placeholder="Year" name="year">
+                </div>
+                <div class="col-md-12">
+                    <label class="form-label">ISBN</label>
+                    <input type="text" class="form-control" placeholder="ISBN" name="isbn">
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 
 </html>

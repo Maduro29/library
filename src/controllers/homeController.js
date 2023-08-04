@@ -13,11 +13,17 @@ const getBooksPage = async (req, res) => {
 }
 
 const getAddBook = (req, res) => {
-    return res.send('okeoke');
+    return res.render('routepage/addbook.ejs');
+}
+
+const postBook = async (req, res) => {
+    await CRUDservice.addBook(req.body);
+    return res.send(req.body);
 }
 
 module.exports = {
     getHomePage: getHomePage,
     getBooksPage: getBooksPage,
-    getAddBook: getAddBook
+    getAddBook: getAddBook,
+    postBook: postBook
 }
