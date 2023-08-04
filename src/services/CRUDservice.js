@@ -1,6 +1,6 @@
 import db from '../models';
 
-const getAllBooks = () => {
+const getAllBooks = async () => {
     return new Promise(async (resolve, reject) => {
         try {
             let listBooks = await db.books.findAll({
@@ -13,7 +13,7 @@ const getAllBooks = () => {
     })
 }
 
-const addBook = (book) => {
+const addBook = async (book) => {
     return new Promise(async (resolve, reject) => {
         try {
             await db.books.create({
@@ -30,7 +30,49 @@ const addBook = (book) => {
     })
 }
 
+const getBookById = async (id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let book = await db.books.findOne({
+                where: { id: id },
+                raw: true
+            })
+            resolve(book);
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
+const editBook = async (id) => {
+    let book = await getBookById(id);
+    console.log(book);
+    return;
+}
+
+const modifyBook = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let book = await db.books.findOne({
+                where: { id: data.id },
+            });
+            book.bookId = data.bookId;
+            book.title = data.title;
+            book.publisher = data.publisher;
+            book.year = data.year;
+            book.isbn = data.isbn;
+            await book.save();
+            resolve();
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
 module.exports = {
     getAllBooks: getAllBooks,
-    addBook: addBook
+    addBook: addBook,
+    getBookById: getBookById,
+    editBook: editBook,
+    modifyBook: modifyBook
 }

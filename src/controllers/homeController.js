@@ -6,7 +6,6 @@ const getHomePage = (req, res) => {
 
 const getBooksPage = async (req, res) => {
     let listBooks = await CRUDservice.getAllBooks();
-    console.log(listBooks);
     return res.render('routepage/books.ejs', {
         data: listBooks
     });
@@ -21,9 +20,23 @@ const postBook = async (req, res) => {
     return res.send(req.body);
 }
 
+const editBook = async (req, res) => {
+    const data = await CRUDservice.getBookById(req.query.id);
+    return res.render('routepage/editbook.ejs', {
+        data: data
+    });
+}
+
+const putBook = async (req, res) => {
+    await CRUDservice.modifyBook(req.query)
+    return res.send('put');
+}
+
 module.exports = {
     getHomePage: getHomePage,
     getBooksPage: getBooksPage,
     getAddBook: getAddBook,
-    postBook: postBook
+    postBook: postBook,
+    editBook: editBook,
+    putBook: putBook
 }
