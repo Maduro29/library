@@ -1,12 +1,23 @@
+import CRUDservice from '../services/CRUDservice'
+
 const getHomePage = (req, res) => {
     return res.render('homepage.ejs');
 }
 
-const getAboutPage = (req, res) => {
-    return res.render('routepage/about.ejs');
+const getBooksPage = async (req, res) => {
+    let listBooks = await CRUDservice.getAllBooks();
+    console.log(listBooks);
+    return res.render('routepage/books.ejs', {
+        data: listBooks
+    });
+}
+
+const getAddBook = (req, res) => {
+    return res.send('okeoke');
 }
 
 module.exports = {
     getHomePage: getHomePage,
-    getAboutPage: getAboutPage
+    getBooksPage: getBooksPage,
+    getAddBook: getAddBook
 }
