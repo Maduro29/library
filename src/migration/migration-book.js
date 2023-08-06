@@ -15,6 +15,9 @@ module.exports = {
             title: {
                 type: Sequelize.STRING
             },
+            authors: {
+                type: Sequelize.STRING
+            },
             publisher: {
                 type: Sequelize.STRING
             },

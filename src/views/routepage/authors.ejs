@@ -22,33 +22,35 @@
 <body>
     <div class="container">
         <div class="row">
+            <div class="col-6">
+                <a href="/books" class="btn btn-secondary">Back to Book List</a>
+            </div>
+            <div class="col-6">
+                <a href="/" class="btn btn-primary" style="margin: 0 0 0 auto">Back to Home Page</a>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">Book Id</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Publisher</th>
-                        <th scope="col">Year</th>
-                        <th scope="col">ISBN</th>
+                        <th scope="col">Author Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Nationality</th>
                     </tr>
                 </thead>
                 <tbody>
                     <% for(var i=0; i < data.length; i++) { %>
                         <tr key=<%=data[i].id %>>
                             <td>
-                                <%= data[i].bookId %>
+                                <%= data[i].authorId %>
                             </td>
                             <td>
-                                <%= data[i].title %>
+                                <%= data[i].name %>
                             </td>
                             <td>
-                                <%= data[i].publisher %>
-                            </td>
-                            <td>
-                                <%= data[i].year %>
-                            </td>
-                            <td>
-                                <%= data[i].isbn %>
+                                <%= data[i].personality %>
                             </td>
                         </tr>
                         <% } %>
@@ -56,11 +58,7 @@
             </table>
         </div>
     </div>
-    <div class="container">
-        <div class="row col-8">
-            <a href="/books" class="btn btn-secondary">Back to Book List</a>
-        </div>
-    </div>
+
 </body>
 
 </html>

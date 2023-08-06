@@ -1,5 +1,6 @@
 import db from '../models';
 import { Op } from 'sequelize';
+import XLSX from 'xlsx';
 
 const getAllBooks = async () => {
     return new Promise(async (resolve, reject) => {
@@ -20,6 +21,7 @@ const addBook = async (book) => {
             await db.books.create({
                 bookId: book.bookId,
                 title: book.title,
+                authors: book.authors,
                 publisher: book.publisher,
                 year: book.year,
                 isbn: book.isbn
@@ -59,6 +61,7 @@ const modifyBook = (data) => {
             });
             book.bookId = data.bookId;
             book.title = data.title;
+            book.authors = data.authors;
             book.publisher = data.publisher;
             book.year = data.year;
             book.isbn = data.isbn;
@@ -120,14 +123,34 @@ const searchByBookISBN = async (isbn) => {
     })
 }
 
+const searchByBookAuthors = async (authors) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let books = await db.books.findAll({
+                where: {
+                    authors: {
+                        [Op.like]: "%" + authors + "%"
+                    }
+                },
+                raw: true
+            })
+            resolve(books);
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
 const searchBook = async (data) => {
     let books = {};
     if (data.type == '1') {
         books = await searchByBookId(data.value);
     } else if (data.type == '2') {
         books = await searchByBookTitle(data.value);
-    } else {
+    } else if (data.type == '3') {
         books = await searchByBookISBN(data.value);
+    } else {
+        books = await searchByBookAuthors(data.value);
     }
     return books;
 }
@@ -141,7 +164,6 @@ const orderredId = async (type) => {
                 ],
                 raw: true
             });
-            console.log(books);
             resolve(books);
         } catch (e) {
             reject(e);
@@ -158,7 +180,6 @@ const orderredPub = async (type) => {
                 ],
                 raw: true
             });
-            console.log(books);
             resolve(books);
         } catch (e) {
             reject(e);
@@ -173,7 +194,85 @@ const orderred = async (data) => {
     } else {
         books = await orderredPub(data.type);
     }
-    return data;
+    return books;
+}
+
+const exportXLSX = async (data) => {
+    const books = await db.books.findAll({
+        raw: true
+    });
+
+    let worksheet = XLSX.utils.json_to_sheet(books);
+
+    var workbook = XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+
+    XLSX.writeFile(workbook, data.fileName ? data.fileName + '.xlsx' : 'data_export.xlsx');
+
+    return;
+}
+
+const checkImport = (fileName) => {
+    const fileExt = fileName.split('.').pop();
+    return fileExt === 'xlsx';
+}
+
+const checkDataImport = (data) => {
+    if (data && Object.keys(data[0]).length === 6) {
+        const keys = Object.keys(data[0]);
+        if (keys[0] === 'bookId' &&
+            keys[1] === 'title' &&
+            keys[2] === 'authors' &&
+            keys[3] === 'publisher' &&
+            keys[4] === 'year' &&
+            keys[5] === 'isbn') {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
+}
+
+const importXLSX = (data) => {
+    const result = {}
+    const checkExt = checkImport(data.query.fileName);
+    if (!checkExt) {
+        result.message = "Wrong format file";
+        result.code = 1;
+        return result;
+    } else {
+        const workbook = XLSX.readFile(data.query.fileName);
+        const sheet_name_list = workbook.SheetNames;
+        const books = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
+        if (!checkDataImport(books)) {
+            result.message = "Wrong data in file";
+            result.code = 1;
+            return result;
+        } else {
+            for (let i = 0; i < books.length; i++) {
+                addBook(books[i]);
+            }
+            result.message = "Import done";
+            result.code = 0;
+            return result;
+        }
+    }
+}
+
+const getAllAuthors = async () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let listAuthors = await db.authors.findAll({
+                raw: true
+            });
+            resolve(listAuthors);
+        } catch (e) {
+            reject(e);
+        }
+    })
 }
 
 module.exports = {
@@ -183,5 +282,8 @@ module.exports = {
     editBook: editBook,
     modifyBook: modifyBook,
     searchBook: searchBook,
-    orderred: orderred
+    orderred: orderred,
+    exportXLSX: exportXLSX,
+    importXLSX: importXLSX,
+    getAllAuthors: getAllAuthors
 }

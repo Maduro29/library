@@ -12,6 +12,11 @@ let initWebRoutes = (app) => {
     router.get('/putbook', homeController.putBook);
     router.get('/result', homeController.getResult);
     router.get('/order', homeController.getOrder);
+    router.get('/export', homeController.exportData);
+    router.get('/exportdone', homeController.doneExport);
+    router.get('/import', homeController.importData);
+    router.get('/importdone', homeController.doneImport);
+    router.get('/authors', homeController.getAuthors);
 
     return app.use('/', router);
 }

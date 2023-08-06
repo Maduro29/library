@@ -1,10 +1,9 @@
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Add Book</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -21,12 +20,16 @@
 
 <body>
     <div class="container">
-        <h4>Library Management System:</h4>
-        <div class="row col-8" style="margin-bottom: 10px">
-            <a href="/books" class="btn btn-secondary">View Book List</a>
-        </div>
         <div class="row col-8">
-            <a href="/authors" class="btn btn-secondary">View all authors</a>
+            <form class="row g-3" action="/exportdone" method="GET">
+                <div class="col-md-12">
+                    <label class="form-label">File Name (.xlsx)</label>
+                    <input type="text" class="form-control" placeholder="Enter the file name" name="fileName">
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Export</button>
+                </div>
+            </form>
         </div>
     </div>
 </body>

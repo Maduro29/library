@@ -7,7 +7,8 @@ const getHomePage = (req, res) => {
 const getBooksPage = async (req, res) => {
     let listBooks = await CRUDservice.getAllBooks();
     return res.render('routepage/books.ejs', {
-        data: listBooks
+        data: listBooks,
+        isSearch: 0
     });
 }
 
@@ -17,7 +18,7 @@ const getAddBook = (req, res) => {
 
 const postBook = async (req, res) => {
     await CRUDservice.addBook(req.body);
-    return res.send(req.body);
+    return res.render('routepage/afterpost.ejs');
 }
 
 const editBook = async (req, res) => {
@@ -30,7 +31,7 @@ const editBook = async (req, res) => {
 
 const putBook = async (req, res) => {
     await CRUDservice.modifyBook(req.query)
-    return res.send('put');
+    return res.render('routepage/afterpost.ejs');
 }
 
 const getSearchPage = (req, res) => {
@@ -39,8 +40,9 @@ const getSearchPage = (req, res) => {
 
 const getResult = async (req, res) => {
     let books = await CRUDservice.searchBook(req.query);
-    return res.render('routepage/books', {
-        data: books
+    return res.render('routepage/books.ejs', {
+        data: books,
+        isSearch: 1
     });
 }
 
@@ -48,6 +50,35 @@ const getOrder = async (req, res) => {
     let books = await CRUDservice.orderred(req.query);
     return res.render('routepage/orderred.ejs', {
         data: books
+    });
+}
+
+const exportData = async (req, res) => {
+    return res.render('routepage/export.ejs');
+}
+
+const doneExport = async (req, res) => {
+    await CRUDservice.exportXLSX(req.query);
+    return res.render('routepage/afterpost.ejs');
+}
+
+const importData = (req, res) => {
+    return res.render('routepage/import.ejs');
+}
+
+const doneImport = (req, res) => {
+    const data = CRUDservice.importXLSX(req);
+    console.log(data);
+    return res.render('routepage/afterimport', {
+        message: data.message,
+        code: data.code
+    })
+}
+
+const getAuthors = async (req, res) => {
+    let listAuthors = await CRUDservice.getAllAuthors();
+    return res.render('routepage/authors.ejs', {
+        data: listAuthors,
     });
 }
 
@@ -60,5 +91,10 @@ module.exports = {
     putBook: putBook,
     getSearchPage: getSearchPage,
     getResult: getResult,
-    getOrder: getOrder
+    getOrder: getOrder,
+    exportData: exportData,
+    doneExport: doneExport,
+    importData: importData,
+    doneImport: doneImport,
+    getAuthors: getAuthors
 }
