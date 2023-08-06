@@ -187,12 +187,30 @@ const orderredPub = async (type) => {
     })
 }
 
+const orderredISBN = async (type) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let books = await db.books.findAll({
+                order: [
+                    ['isbn', type],
+                ],
+                raw: true
+            });
+            resolve(books);
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
 const orderred = async (data) => {
     let books = {}
     if (data.aspect == '1') {
         books = await orderredId(data.type);
-    } else {
+    } else if (data.aspect == '2') {
         books = await orderredPub(data.type);
+    } else {
+        books = await orderredISBN(data.type);
     }
     return books;
 }
