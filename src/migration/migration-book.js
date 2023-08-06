@@ -10,7 +10,7 @@ module.exports = {
                 type: Sequelize.INTEGER
             },
             bookId: {
-                type: Sequelize.STRING
+                type: Sequelize.INTEGER
             },
             title: {
                 type: Sequelize.STRING

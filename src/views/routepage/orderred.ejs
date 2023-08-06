@@ -21,27 +21,6 @@
 
 <body>
     <div class="container">
-        <div class="row col-8">
-            <form class="row g-3" action="/result" method="GET">
-                <div class="col-md-8">
-                    <label class="form-label">Enter the value you want to search:</label>
-                    <input type="text" class="form-control" placeholder="Search" name="value">
-                </div>
-                <div class="col-md-4">
-                    <label for="inputState" class="form-label">Search by:</label>
-                    <select name="type" class="form-select">
-                        <option value="1">Book's Id</option>
-                        <option value="2">Book's Title</option>
-                        <option value="3">Book's ISBN</option>
-                    </select>
-                </div>
-                <div class="col-12">
-                    <button type="submit" class="btn btn-primary">Search</button>
-                </div>
-            </form>
-        </div>
-    </div>
-    <div class="container">
         <div class="row">
             <table class="table">
                 <thead>
@@ -79,32 +58,6 @@
                         <% } %>
                 </tbody>
             </table>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row col-8">
-            <form class="row g-3" action="/order" method="GET">
-                <div class="col-md-12">
-                    <label class="form-label">Arrange all books with the order you choose:</label>
-                </div>
-                <div class="col-md-3">
-                    <label for="inputState" class="form-label">Aspect:</label>
-                    <select name="aspect" class="form-select">
-                        <option value="1">Book's Id</option>
-                        <option value="2">Book's Publisher</option>
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <label for="inputState" class="form-label">Order by:</label>
-                    <select name="type" class="form-select">
-                        <option value="asc">Ascending</option>
-                        <option value="desc">Descending</option>
-                    </select>
-                </div>
-                <div class="col-12">
-                    <button type="submit" class="btn btn-primary">Done</button>
-                </div>
-            </form>
         </div>
     </div>
 </body>

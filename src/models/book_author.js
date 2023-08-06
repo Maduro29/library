@@ -16,8 +16,8 @@ module.exports = (sequelize, DataTypes) => {
 
     //khong can khai bao id
     book_author.init({
-        bookId: DataTypes.STRING,
-        authorId: DataTypes.STRING,
+        bookId: DataTypes.INTEGER,
+        authorId: DataTypes.INTEGER,
     }, {
         sequelize,
         modelName: 'book_author',

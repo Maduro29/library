@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
 
     //khong can khai bao id
     author.init({
-        authorId: DataTypes.STRING,
+        authorId: DataTypes.INTEGER,
         name: DataTypes.STRING,
     }, {
         sequelize,

@@ -9,7 +9,9 @@ let initWebRoutes = (app) => {
     router.get('/addbook', homeController.getAddBook);
     router.post('/postbook', homeController.postBook);
     router.get('/editbook', homeController.editBook);
-    router.get('/putbook', homeController.putBook)
+    router.get('/putbook', homeController.putBook);
+    router.get('/result', homeController.getResult);
+    router.get('/order', homeController.getOrder);
 
     return app.use('/', router);
 }

@@ -10,10 +10,10 @@ module.exports = {
                 type: Sequelize.INTEGER
             },
             bookId: {
-                type: Sequelize.STRING
+                type: Sequelize.INTEGER
             },
             authorId: {
-                type: Sequelize.STRING
+                type: Sequelize.INTEGER
             },
             createdAt: {
                 allowNull: false,
