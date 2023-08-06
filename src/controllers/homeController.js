@@ -69,7 +69,7 @@ const importData = (req, res) => {
 const doneImport = (req, res) => {
     const data = CRUDservice.importXLSX(req);
     console.log(data);
-    return res.render('routepage/afterimport', {
+    return res.render('routepage/afterimport.ejs', {
         message: data.message,
         code: data.code
     })
@@ -80,6 +80,19 @@ const getAuthors = async (req, res) => {
     return res.render('routepage/authors.ejs', {
         data: listAuthors,
     });
+}
+
+const deleteBook = async (req, res) => {
+    const data = await CRUDservice.getBookById(req.query.id);
+    console.log(data);
+    return res.render('routepage/deletebook.ejs', {
+        data: data
+    });
+}
+
+const doneDelete = async (req, res) => {
+    await CRUDservice.deleteBook(req.query)
+    return res.render('routepage/afterpost.ejs');
 }
 
 module.exports = {
@@ -96,5 +109,7 @@ module.exports = {
     doneExport: doneExport,
     importData: importData,
     doneImport: doneImport,
-    getAuthors: getAuthors
+    getAuthors: getAuthors,
+    deleteBook: deleteBook,
+    doneDelete: doneDelete
 }

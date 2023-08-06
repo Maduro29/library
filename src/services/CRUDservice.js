@@ -275,6 +275,19 @@ const getAllAuthors = async () => {
     })
 }
 
+const deleteBook = async (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await db.books.destroy({
+                where: { id: data.id },
+            });
+            resolve();
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
 module.exports = {
     getAllBooks: getAllBooks,
     addBook: addBook,
@@ -285,5 +298,6 @@ module.exports = {
     orderred: orderred,
     exportXLSX: exportXLSX,
     importXLSX: importXLSX,
-    getAllAuthors: getAllAuthors
+    getAllAuthors: getAllAuthors,
+    deleteBook: deleteBook
 }

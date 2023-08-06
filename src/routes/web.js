@@ -17,6 +17,8 @@ let initWebRoutes = (app) => {
     router.get('/import', homeController.importData);
     router.get('/importdone', homeController.doneImport);
     router.get('/authors', homeController.getAuthors);
+    router.get('/deletebook', homeController.deleteBook);
+    router.get('/donedelete', homeController.doneDelete);
 
     return app.use('/', router);
 }

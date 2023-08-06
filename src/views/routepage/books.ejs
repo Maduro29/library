@@ -92,8 +92,10 @@
                             <td>
                                 <%= data[i].isbn %>
                             </td>
-                            <td>
+                            <td class="row g-2">
                                 <a href="/editbook?id=<%= data[i].id %>" class="btn btn-warning" type="button">Edit</a>
+                                <a href="/deletebook?id=<%= data[i].id %>" class="btn btn-danger"
+                                    type="button">Delete</a>
                             </td>
                         </tr>
                         <% } %>
